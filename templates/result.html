@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Analysis Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Analysis Result</h1>
+    {% if tables %}
+        {% for table in tables %}
+            {{ table|safe }}
+        {% endfor %}
+    {% elif plot_path %}
+        <img src="{{ url_for('static', filename=plot_path.split('/')[-1]) }}" alt="Analysis Plot">
+        {% if mse and r2 %}
+            <p>Mean Squared Error: {{ mse }}</p>
+            <p>R² Score: {{ r2 }}</p>
+        {% endif %}
+    {% endif %}
+    <br>
+    <a href="{{ url_for('index') }}">Go Back</
