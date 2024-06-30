@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Business Analysis Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Business Analysis Tool</h1>
+    <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+        <label for="file">Upload CSV File:</label>
+        <input type="file" name="file" id="file">
+        <br><br>
+        <label for="analysis_type">Select Analysis Type:</label>
+        <select name="analysis_type" id="analysis_type">
+            <option value="descriptive">Descriptive Statistics</option>
+            <option value="trend">Trend Analysis</option>
+            <option value="correlation">Correlation Analysis</option>
+            <option value="segmentation">Segmentation Analysis</option>
+            <option value="predictive">Predictive Analysis</option>
+        </select>
+        <br><br>
+        <div id="additional_inputs">
+            <!-- Additional inputs will be added here based on the selected analysis type -->
+        </div>
+        <br>
+        <button type="submit">Analyze</button>
+    </form>
+    <script>
+        document.getElementById('analysis_type').addEventListener('change', function() {
+            const additionalInputs = document.getElementById('additional_inputs');
+            additionalInputs.innerHTML = '';
+            if (this.value === 'trend' || this.value === 'segmentation') {
+                additionalInputs.innerHTML = `
+                    <label for="date_column">Date Column:</label>
+                    <input type="text" name="date_column" id="date_column">
+                    <br><br>
+                    <label for="value_column">Value Column:</label>
+                    <input type="text" name="value_column" id="value_column">
+                    <br><br>
+                `;
+            } else if (this.value === 'predictive') {
+                additionalInputs.innerHTML = `
+                    <label for="feature_column">Feature Column:</label>
+                    <input type="text" name="feature_column" id="feature_column">
+                    <br><br>
+                    <label for="target_column">Target Column:</label>
+                    <input type="text" name="target_column" id="target_column">
+                    <br><br>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>
